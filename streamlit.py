@@ -11,8 +11,8 @@ df = pd.DataFrame({
 })
 
 # Streamlit UI
-st.title("AI-Powered Disaster Alert System")
-st.write("Monitor and predict disasters in real-time using AI.")
+st.title("AI-Powered Tsunami Alert System")
+st.write("Monitor and predict tsunamis in real-time using AI.")
 
 # Line Chart using Streamlit's built-in chart
 st.subheader("Sensor Data Over Time")
@@ -28,21 +28,24 @@ df_map = pd.DataFrame({
 st.map(df_map)
 
 # Prediction Section
-st.subheader("Disaster Prediction")
+st.subheader("Tsunami Probability Prediction")
 sensor_data = st.text_area("Enter Sensor Data (comma-separated values)")
 location = st.text_input("Enter Location")
 
-def predict_disaster(sensor_data):
+def predict_tsunami(sensor_data):
     features = np.array(sensor_data).reshape(1, -1)
     prediction = np.random.rand()  # Placeholder for actual AI model prediction
     if prediction > 0.8:
-        return f"Disaster detected at {location}! Probability: {prediction:.2f}"
-    return f"No disaster detected at {location}. Probability: {prediction:.2f}"
+        return f"🚨 Tsunami Warning at {location}! Probability: {prediction:.2f}"
+    return f"✅ No Tsunami Risk at {location}. Probability: {prediction:.2f}"
 
-if st.button("Predict Disaster"):
+if st.button("Predict Tsunami"):
     if sensor_data and location:
-        sensor_values = list(map(float, sensor_data.split(',')))
-        result = predict_disaster(sensor_values)
-        st.success(result)
+        try:
+            sensor_values = list(map(float, sensor_data.split(',')))
+            result = predict_tsunami(sensor_values)
+            st.success(result)
+        except ValueError:
+            st.error("Please enter valid numerical sensor data.")
     else:
         st.error("Please enter valid sensor data and location.")
