@@ -4,4 +4,3 @@ pandas
 matplotlib
 tensorflow
 psycopg2
-plotly
