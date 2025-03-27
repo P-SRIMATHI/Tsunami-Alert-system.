@@ -4,31 +4,29 @@ import pandas as pd
 import tensorflow as tf
 import psycopg2
 
-# Sample Data for Visualization
-df = pd.DataFrame({
-    'Time': pd.date_range(start='1/1/2024', periods=10, freq='H'),
-    'Sensor Readings': np.random.randint(50, 150, size=10)
-})
-
 # Streamlit UI
-st.title("AI-Powered Tsunami Alert System")
+st.title("🌊 AI-Powered Tsunami Alert System")
 st.write("Monitor and predict tsunamis in real-time using AI.")
 
-# Line Chart using Streamlit's built-in chart
-st.subheader("Sensor Data Over Time")
-st.line_chart(df.set_index('Time'))
+# Visual Appeal: Tsunami Warning Image
+st.image("https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Tsunami_Hazard_Sign.svg/1200px-Tsunami_Hazard_Sign.svg.png", caption="Tsunami Hazard Warning", use_column_width=True)
 
-# Map Visualization
-st.subheader("Disaster-Prone Areas")
-df_map = pd.DataFrame({
-    'lat': [13.0827, 12.9716, 28.7041],
-    'lon': [80.2707, 77.5946, 77.1025],
-    'location': ['Chennai', 'Bangalore', 'Delhi']
-})
-st.map(df_map)
+# Emergency Response Information
+st.subheader("🚨 What to Do in Case of a Tsunami?")
+st.markdown("""
+- Move to **higher ground** immediately.
+- Follow **official alerts and warnings**.
+- Do not return until authorities declare it safe.
+- Stay informed via **emergency broadcast systems**.
+- Have a **disaster preparedness kit** ready.
+""")
+
+# Alert Banners
+st.warning("⚠️ Tsunami-prone region detected! Stay alert.")
+st.info("ℹ️ Keep an emergency plan in place.")
 
 # Prediction Section
-st.subheader("Tsunami Probability Prediction")
+st.subheader("🌊 Tsunami Probability Prediction")
 sensor_data = st.text_area("Enter Sensor Data (comma-separated values)")
 location = st.text_input("Enter Location")
 
