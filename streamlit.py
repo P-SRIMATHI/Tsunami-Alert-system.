@@ -1,7 +1,7 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import plotly.express as px
+import matplotlib.pyplot as plt
 import tensorflow as tf
 import psycopg2
 
@@ -17,8 +17,12 @@ st.write("Monitor and predict disasters in real-time using AI.")
 
 # Line Chart
 st.subheader("Sensor Data Over Time")
-fig_line = px.line(df, x='Time', y='Sensor Readings', title='Sensor Readings Trend')
-st.plotly_chart(fig_line)
+fig, ax = plt.subplots()
+ax.plot(df['Time'], df['Sensor Readings'], marker='o', linestyle='-')
+ax.set_title("Sensor Readings Trend")
+ax.set_xlabel("Time")
+ax.set_ylabel("Sensor Readings")
+st.pyplot(fig)
 
 # Map Visualization
 st.subheader("Disaster-Prone Areas")
@@ -28,9 +32,6 @@ df_map = pd.DataFrame({
     'location': ['Chennai', 'Bangalore', 'Delhi']
 })
 st.map(df_map)
-
-# Load pre-trained AI model (Placeholder for actual model)
-# model = tf.keras.models.load_model("disaster_model.h5")
 
 # Prediction Section
 st.subheader("Disaster Prediction")
