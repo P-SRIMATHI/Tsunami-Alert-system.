@@ -1,6 +1,6 @@
 streamlit
 numpy
 pandas
-matplotlib.pyplot as px
+matplotlib.pyplot as plt
 tensorflow
 psycopg2
