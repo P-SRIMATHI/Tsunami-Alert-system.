@@ -1,6 +1,6 @@
 streamlit
 numpy
-matplotlib
 pandas
-pydeck
-altair
+plotly
+tensorflow
+psycopg2
