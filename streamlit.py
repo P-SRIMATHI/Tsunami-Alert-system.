@@ -1,48 +1,53 @@
-import streamlit as st  
-import numpy as np  
-import pandas as pd  
-import matplotlib.pyplot as plt  
-import pydeck as pdk  
-import altair as alt  
+import streamlit as st
+import numpy as np
+import pandas as pd
+import plotly.express as px
+import tensorflow as tf
+import psycopg2
 
-# Title  
-st.title("🌍 AI-Powered Disaster Alert System")  
-st.write("Monitor and visualize disaster risks with AI.")  
+# Sample Data for Visualization
+df = pd.DataFrame({
+    'Time': pd.date_range(start='1/1/2024', periods=10, freq='H'),
+    'Sensor Readings': np.random.randint(50, 150, size=10)
+})
 
-# User Input  
-location = st.text_input("📍 Enter Location")  
-sensor_data = st.text_area("📊 Enter Sensor Data (comma-separated values)")  
+# Streamlit UI
+st.title("AI-Powered Disaster Alert System")
+st.write("Monitor and predict disasters in real-time using AI.")
 
-if st.button("Analyze"):  
-    if location and sensor_data:  
-        sensor_values = list(map(float, sensor_data.split(',')))  
-        prediction = np.random.rand()  # Mock AI prediction  
+# Line Chart
+st.subheader("Sensor Data Over Time")
+fig_line = px.line(df, x='Time', y='Sensor Readings', title='Sensor Readings Trend')
+st.plotly_chart(fig_line)
 
-        # Display Prediction  
-        if prediction > 0.7:  
-            st.error(f"🚨 High disaster risk detected at {location}! Probability: {prediction:.2f}")  
-        else:  
-            st.success(f"✅ No significant disaster risk at {location}. Probability: {prediction:.2f}")  
+# Map Visualization
+st.subheader("Disaster-Prone Areas")
+df_map = pd.DataFrame({
+    'lat': [13.0827, 12.9716, 28.7041],
+    'lon': [80.2707, 77.5946, 77.1025],
+    'location': ['Chennai', 'Bangalore', 'Delhi']
+})
+st.map(df_map)
 
-        # 📊 **Bar Chart (Matplotlib)**
-        st.write("📊 **Sensor Data Distribution**")  
-        fig, ax = plt.subplots()  
-        ax.bar(range(len(sensor_values)), sensor_values, color='skyblue')  
-        ax.set_xlabel("Sensor Index")  
-        ax.set_ylabel("Value")  
-        ax.set_title("Sensor Data Visualization")  
-        st.pyplot(fig)  
+# Load pre-trained AI model (Placeholder for actual model)
+# model = tf.keras.models.load_model("disaster_model.h5")
 
-        # 📈 **Line Chart (Altair)**
-        st.write("📈 **Sensor Data Trends**")  
-        df = pd.DataFrame({"Time": range(1, len(sensor_values) + 1), "Sensor Value": sensor_values})  
-        line_chart = alt.Chart(df).mark_line().encode(x="Time", y="Sensor Value")  
-        st.altair_chart(line_chart, use_container_width=True)  
+# Prediction Section
+st.subheader("Disaster Prediction")
+sensor_data = st.text_area("Enter Sensor Data (comma-separated values)")
+location = st.text_input("Enter Location")
 
-        # 🗺️ **Map Visualization (PyDeck)**
-        st.write("🗺️ **Disaster Risk Location Map**")  
-        map_data = pd.DataFrame({"lat": [13.0827], "lon": [80.2707]})  # Example: Chennai  
-        st.map(map_data)  
+def predict_disaster(sensor_data):
+    features = np.array(sensor_data).reshape(1, -1)
+    prediction = np.random.rand()  # Placeholder for actual AI model prediction
+    if prediction > 0.8:
+        return f"Disaster detected at {location}! Probability: {prediction:.2f}"
+    return f"No disaster detected at {location}. Probability: {prediction:.2f}"
 
-    else:  
-        st.error("⚠️ Please enter valid inputs.")  
+if st.button("Predict Disaster"):
+    if sensor_data and location:
+        sensor_values = list(map(float, sensor_data.split(',')))
+        result = predict_disaster(sensor_values)
+        st.success(result)
+    else:
+        st.error("Please enter valid sensor data and location.")
