@@ -1,7 +1,6 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import tensorflow as tf
 import psycopg2
 
 # Streamlit UI
@@ -32,7 +31,7 @@ location = st.text_input("Enter Location")
 
 def predict_tsunami(sensor_data):
     features = np.array(sensor_data).reshape(1, -1)
-    prediction = np.random.rand()  # Placeholder for actual AI model prediction
+    prediction = np.random.rand()  # Placeholder for simple probability generation
     if prediction > 0.8:
         return f"🚨 Tsunami Warning at {location}! Probability: {prediction:.2f}"
     return f"✅ No Tsunami Risk at {location}. Probability: {prediction:.2f}"
