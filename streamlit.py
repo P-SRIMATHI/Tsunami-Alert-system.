@@ -1,8 +1,6 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import psycopg2
-
 # Streamlit UI
 st.title("🌊 AI-Powered Tsunami Alert System")
 st.write("Monitor and predict tsunamis in real-time using AI.")
